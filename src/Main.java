@@ -1,3 +1,6 @@
+import items.materials.Material;
+import items.materials.MaterialManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -6,8 +9,6 @@ import java.util.ArrayList;
 public class Main {
 
     public static final JFrame frame = new JFrame("Shopping Aplication");
-
-    public static final ArrayList<String> list = new ArrayList<>();
 
     public static void main(String[] args) {
 //        Sets up the window
@@ -30,28 +31,31 @@ public class Main {
     }
 
     private static void setup() {
+
+        classInitializations();
+
         frame.setSize(1200, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        // TEMPORARY
-        list.add("Sword");
-        list.add("Plate armor");
-        list.add("Chain Mail");
-        list.add("Cooking Pot");
-
         JMenuBar menuBar = new JMenuBar();
-        JMenu todo = new JMenu("TODO:");
-        for (var s : list.toArray()) {
-            JMenuItem temp = new JMenuItem((String)s);
-            todo.add(temp);
+        JMenu materials = new JMenu("Materials");
+
+        for(Material m : MaterialManager.materials.getValueList().toArray(new Material[0])) {
+            JMenuItem material = new JMenuItem(m.getName());
+
+            materials.add(material);
         }
 
-        menuBar.add(todo);
+        menuBar.add(materials);
         frame.setJMenuBar(menuBar);
 
 
 
         frame.setVisible(true);
+    }
+
+    private static void classInitializations() {
+        MaterialManager.init();
     }
 }
